@@ -88,10 +88,7 @@ const FlipCard = ({ card, style }) => {
                                             transitionDuration: "500ms"
                                         }}
                                     >
-                                        <img src={card.image} className="img-fluid" style={{
-                                            maxWidth: '200px',
-                                            maxHeight: '200px',
-                                        }} />
+                                        <img src={card.image} className="img-fluid max-w-100px max-h-100px"/>
                                     </div>
                                     : 
                                     <div 

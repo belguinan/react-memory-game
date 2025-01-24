@@ -145,7 +145,7 @@ export default function Home() {
         return (
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className="col-12 col-md-8 col-lg-6">
+                    <div className="col-12 col-md-9 col-lg-8 col-xl-7">
                         {hasSavedGame ? (
                             <div className="card border-0 shadow-sm mb-4 rounded-4 fade-in-delay-1">
                                 <div className="card-body p-4 rounded-4">
@@ -223,19 +223,18 @@ export default function Home() {
     }
     
     return (
-        <div className="container h-100">
+        <div className={`h-100 ${activeSettings.cardCount === 32 ? 'container-fluid' : 'container'}`}>
             <PauseOverlay isVisible={isPaused}/>
 
-            <div className="row mb-3">
-                <div className="col-12">
-                    <GameStats />
-                </div>
-            </div>
+            <div className="row flex-column justify-content-center">
 
-            <div className="row">
-                <div className="col-12 fade-in-delay-2">
+                <div className={`fade-in col-12 mx-auto mb-4 ${activeSettings.cardCount <= 16 ? 'max-w-650px' : ''}`}>
+                    <GameStats/>
+                </div>
+
+                <div className={`fade-in-delay-2 col-12 mx-auto mb-4 ${activeSettings.cardCount <= 16 ? 'max-w-650px' : ''}`}>
                     <div
-                        className={`align-items-center rounded-4 fade-in-delay-3 card-grid ${
+                        className={`align-items-center mx-auto rounded-4 fade-in-delay-3 card-grid ${
                             activeSettings.cardCount === 4 ? 'card-grid-4' :
                             activeSettings.cardCount === 16 ? 'card-grid-16' :
                             'card-grid-32'

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { formatTime } from '@/helpers/helpers.js';
 import { updateElapsedTimeAction } from '@/helpers/actions';
 
-export default function GameStats() {
+export default function GameStats({}) {
     const dispatch = useDispatch();
     const timerRef = useRef(null);
     const [displayedSteps, setDisplayedSteps] = useState(0);
@@ -43,7 +43,7 @@ export default function GameStats() {
     }, [steps]);
 
     return (
-        <div className={`card border-0 shadow-sm rounded-3 overflow-hidden fade-in-delay-1`}>
+        <div className={`card mx-auto border-0 shadow-sm rounded-3 overflow-hidden fade-in-delay-1`}>
             <div className="card-body p-0">
                 <div className="d-flex justify-content-start align-items-center">
                     <div className="d-flex align-items-center w-100">

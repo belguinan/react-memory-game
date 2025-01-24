@@ -1,5 +1,44 @@
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
+@each $breakpoint in $custom-breakpoints {
+
+	$breakpoint-prefix: '-' + #{$breakpoint};
+
+    @if $breakpoint == 'xs' {
+        $breakpoint-prefix: '';
+    }
+
+    @each $size in $custom-width-sizes {
+
+        @include media-breakpoint-up(#{$breakpoint}) {
+            .w#{$breakpoint-prefix}-#{str-replace($size, '%', '')} {
+                width: #{$size} !important;
+            }
+
+            .max-w#{$breakpoint-prefix}-#{str-replace($size, '%', '')} {
+                max-width: #{$size} !important;
+            }
+
+            .min-w#{$breakpoint-prefix}-#{str-replace($size, '%', '')} {
+                min-width: #{$size} !important;
+            }
+
+            .h#{$breakpoint-prefix}-#{str-replace($size, '%', '')} {
+                height: #{$size} !important;
+            }
+
+            .max-height#{$breakpoint-prefix}-#{str-replace($size, '%', '')} {
+                max-height: #{$size} !important;
+            }
+
+            .min-h#{$breakpoint-prefix}-#{str-replace($size, '%', '')} {
+                min-height: #{$size} !important;
+            }
+        }
+    }
+}
+
+
 @keyframes galaxyGradient {
     0% {
         background-position: 0% 50%;

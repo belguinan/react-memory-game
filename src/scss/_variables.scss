@@ -43,3 +43,16 @@ $custom-colors: (
     'default': $body-bg,
 );
 
+$custom-breakpoints: (
+	'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'
+);
+
+$custom-width-sizes: (
+    '850px',
+    '800px',
+    '750px',
+    '700px',
+    '650px',
+    '600px',
+    '100px',
+);
