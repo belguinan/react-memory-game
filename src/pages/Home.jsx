@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { generateCards, formatTime } from '@/helpers/helpers.js';
 import FlipCard from "@/components/FlipCard";
@@ -13,26 +13,20 @@ import store from '@/helpers/store';
 import { 
     cardUpdatedAction,
     setGamePausedAction,
-    gameLockedAction,
     resetGameAction,
-    updateFlippedCardsAction,
     setGameStartedAction
 } from "@/helpers/actions.js"
 
-const FLIP_ANIMATION_DURATION = 600;
-const MATCH_ANIMATION_DURATION = 600;
-
 export default function Home() {
 
+    console.log('home')
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
     
     const cards = useSelector(state => state.cards);
-    const isLocked = useSelector(state => state.isLocked);
-    const flippedCardIds = useSelector(state => state.game.flippedCardIds);
     const settings = useSelector(state => state.settings);
     const gameStartTime = useSelector(state => state.game.startTime);
-    const steps = useSelector(state => state.game.steps);
     const isGameStarted = useSelector(state => state.game.isStarted);
     const isPaused = useSelector(state => state.game.isPaused);
     const activeSettings = useSelector(state => state.game.gameSettings || state.settings);
@@ -50,13 +44,13 @@ export default function Home() {
         gameStartTime
     });
 
-    const handleGameSave = (name) => {
+    const handleGameSave = (name, stats) => {
         const gameResult = {
             name,
             date: new Date().toISOString(),
             cardCount: activeSettings.cardCount,
-            steps,
-            time: store.getState().game.elapsedTime
+            steps: stats.steps,
+            time: stats.elapsedTime
         };
         
         const history = JSON.parse(localStorage.getItem('gameHistory') || '[]');
@@ -68,12 +62,13 @@ export default function Home() {
         
         navigate('/history');
     };
-
+    
     const handleStartNewGame = () => {
         dispatch(resetGameAction());
         const newCards = generateCards(settings.cardCount);
         dispatch(cardUpdatedAction(newCards));
         localStorage.removeItem('gameState');
+        setShowVictoryModal(false);
         setHasSavedGame(false);
         setShowSettings(false);
         setGameSettings(settings);
@@ -85,8 +80,6 @@ export default function Home() {
             const savedState = JSON.parse(localStorage.getItem('gameState'));
             if (savedState?.cards) {
                 dispatch(setGameStartedAction(false));
-                dispatch(gameLockedAction(false));
-                dispatch(updateFlippedCardsAction([]));
                 dispatch(cardUpdatedAction(savedState.cards));
                 setShowSettings(false);
                 setGameSettings(savedState?.gameSettings?.settings || savedState?.settings);
@@ -98,64 +91,6 @@ export default function Home() {
             handleStartNewGame();
         }
     };
-    
-    const handleCardClick = (clickedCard) => {
-        if (isLocked || clickedCard.isMatched || flippedCardIds.includes(clickedCard.id)) return;
-
-        if (flippedCardIds.length === 2) {
-            dispatch(updateFlippedCardsAction([]));
-            dispatch(gameLockedAction(false));
-            return;
-        }
-
-        const newFlippedCards = [...flippedCardIds, clickedCard.id];
-        dispatch(updateFlippedCardsAction(newFlippedCards));
-
-        if (newFlippedCards.length === 2) {
-            dispatch(gameLockedAction(true));
-            
-            const [firstId, secondId] = newFlippedCards;
-            const firstCard = cards.find(card => card.id === firstId);
-            const secondCard = cards.find(card => card.id === secondId);
-
-            if (firstCard.image === secondCard.image) {
-                setTimeout(() => {
-                    dispatch(cardUpdatedAction(
-                        cards.map(card => 
-                            (card.id === firstId || card.id === secondId)
-                                ? { ...card, isMatched: true }
-                                : card
-                        )
-                    ));
-                    dispatch(updateFlippedCardsAction([]));
-                    dispatch(gameLockedAction(false));
-                }, MATCH_ANIMATION_DURATION);
-            } else {
-                setTimeout(() => {
-                    dispatch(updateFlippedCardsAction([]));
-                    dispatch(gameLockedAction(false));
-                }, FLIP_ANIMATION_DURATION + 500);
-            }
-        }
-
-        if (! isGameStarted) return
-
-        const gameState = {
-            cards,
-            game: {
-                flippedCardIds: newFlippedCards,
-                isStarted: true,
-                startTime: gameStartTime,
-                steps,
-                elapsedTime: store.getState().game.elapsedTime,
-                gameSettings: settings
-            },
-            settings
-        };
-
-        localStorage.setItem('gameState', JSON.stringify(gameState));
-        setHasSavedGame(true);
-    };
 
     useEffect(() => {
         const savedState = localStorage.getItem('gameState');
@@ -164,6 +99,7 @@ export default function Home() {
         try {
             const parsedState = JSON.parse(savedState);
             if (parsedState.cards?.length > 0) {
+
                 setHasSavedGame(true);
                 setSavedGameStats({
                     cardCount: parsedState.cards.length,
@@ -175,6 +111,7 @@ export default function Home() {
                 if (cards.every(card => card.isMatched)) {
                     dispatch(setGameStartedAction(false));
                     setShowVictoryModal(true);
+                    setHasSavedGame(false);
                 }
             }
         } catch (error) {
@@ -205,7 +142,6 @@ export default function Home() {
             document.removeEventListener('mouseleave', handleMouseLeave);
         };
     }, [isGameStarted, showSettings, showVictoryModal, dispatch]);
-
 
     if (showSettings) {
         return (
@@ -290,7 +226,6 @@ export default function Home() {
     
     return (
         <div className="container h-100">
-
             <PauseOverlay isVisible={isPaused}/>
 
             <div className="row mb-3">
@@ -308,30 +243,21 @@ export default function Home() {
                             'card-grid-32'
                         }`}
                     >
-                        {cards.map((card, index) => (
-                            <FlipCard
+                        {cards.map((card, index) => <FlipCard
                                 style={{
                                     opacity: 0,
                                     animation: `fadeInUp 1s ease-out ${index/10}s forwards`
                                 }}
                                 key={card.id}
                                 card={card}
-                                onCardClick={() => handleCardClick(card)}
-                                isDisabled={card.isMatched || isLocked}
-                                isMatched={card.isMatched}
-                                isFlipped={flippedCardIds.includes(card.id) || card.isMatched}
                             />
-                        ))}
+                        )}
                     </div>
                 </div>
             </div>
 
             {showVictoryModal && <VictoryModal
-                stats={{
-                    steps,
-                    time: formatTime(store.getState().game.elapsedTime),
-                    cardCount: activeSettings.cardCount
-                }}
+                stats={savedGameStats}
                 onSave={handleGameSave}
                 onClose={() => {
                     setShowVictoryModal(false);

@@ -1,11 +1,18 @@
 import { useState } from 'react';
+import { formatTime } from '@/helpers/helpers.js';
 
 const VictoryModal = ({ onSave, stats, onClose }) => {
     const [gameName, setGameName] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(gameName.trim() || 'Guest');
+        
+        const finalStats = {
+            ...stats,
+            time: stats.elapsedTime,
+        };
+        
+        onSave(gameName.trim() || 'Guest', finalStats);
         onClose();
     };
 
@@ -13,7 +20,7 @@ const VictoryModal = ({ onSave, stats, onClose }) => {
         <div className="modal fade show d-block" tabIndex="-1" style={{
             backgroundColor: "rgba(0,0,0, .5)",
         }}>
-            <div className="modal-dialog modal-dialog-centered fade-in">
+            <div className="modal-dialog modal-dialog-centered fade-in" style={{maxWidth: 650}}>
                 <div className="modal-content border-0 rounded-4 shadow">
                     <div className="modal-body p-4">
                         <div className="text-center mb-4">
@@ -29,11 +36,15 @@ const VictoryModal = ({ onSave, stats, onClose }) => {
                             </div>
                             <div className="bg-light px-4 py-3 rounded-3">
                                 <i className="bi bi-clock me-2"></i>
-                                <span className="fw-semibold">{stats.time}</span>
+                                <span className="fw-semibold">{formatTime(stats.elapsedTime)}</span>
                             </div>
                             <div className="bg-light px-4 py-3 rounded-3">
                                 <i className="bi bi-grid-3x3-gap me-2"></i>
                                 <span className="fw-semibold">{stats.cardCount} Cards</span>
+                            </div>
+                            <div className="bg-light px-4 py-3 rounded-3">
+                                <i className="bi bi-check2-square me-2"></i>
+                                <span className="fw-semibold">{stats.matchedCards} Matched</span>
                             </div>
                         </div>
 
