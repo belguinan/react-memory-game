@@ -1,8 +1,53 @@
-# React + Vite
+# React Memory Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive memory card game built with React, Redux, and Bootstrap 5. Test your memory while enjoying various customization options and tracking your progress.
 
-Currently, two official plugins are available:
+## 🎥 Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[![Watch Demo Video](https://i.ibb.co/5KGMRbx/Screenshot-2025-01-24-at-20-14-27.png)](https://www.loom.com/share/9357dca115024898b56199b66a38189c)
+
+## Built With
+
+- React 18
+- React Router DOM
+- Redux
+- Bootstrap 5
+- Vite
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- npm
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/react-memory-game.git
+```
+
+2. Navigate to project directory
+```bash
+cd react-memory-game
+```
+
+3. Install dependencies
+```bash
+npm install
+```
+
+4. Start development server
+```bash
+npm run dev
+```
+
+5. Build for production
+```bash
+npm run build
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
