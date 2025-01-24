@@ -19,8 +19,6 @@ import {
 
 export default function Home() {
 
-    console.log('home')
-    
     const navigate = useNavigate();
     const dispatch = useDispatch();
     
