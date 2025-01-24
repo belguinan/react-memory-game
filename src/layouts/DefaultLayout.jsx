@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Settings from "@/components/Settings";
 
@@ -14,7 +13,7 @@ export default function DefaultLayout() {
     return (
         <div className="h-100 w-100">
             <nav className={`navbar border-0 shadow-none`}>
-                <div className="container">
+                <div className="container justify-content-end">
                     <a 
                         className="navbar-brand" 
                         onClick={() => navigateTo('/')}

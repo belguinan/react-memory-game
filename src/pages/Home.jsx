@@ -8,7 +8,6 @@ import VictoryModal from '@/components/VictoryModal';
 import GameStats from '@/components/GameStats'
 import { useNavigate } from 'react-router-dom';
 import { useGameTimer } from '@/hooks/useGameTimer.js'
-import store from '@/helpers/store';
 
 import { 
     cardUpdatedAction,
