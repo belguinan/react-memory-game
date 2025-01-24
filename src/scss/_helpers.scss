@@ -1,0 +1,233 @@
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@keyframes galaxyGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+[data-bs-theme="dark"] {
+    --bs-body-color: #f8f8f5;
+    --bs-body-bg: #0f1b22;
+    --bs-primary: #60a5fa;
+    --bs-secondary: #475569;
+    --bs-border-color: rgba(248, 248, 245, 0.1);
+    --bs-tertiary-bg: #1e293b;
+    --bs-emphasis-color: #fff;
+
+    .card {
+        --bs-card-bg: rgb(47 58 70 / 90%);
+    }
+    
+    .btn {
+        --bs-btn-color: #fff;
+    }
+    
+    .dropdown-menu {
+        --bs-dropdown-bg: #27292b;
+    }
+
+    .table {
+        --bs-table-bg: #27292b;
+    }
+
+    .btn-primary {
+        --bs-btn-bg: #16262e;
+    }
+}
+
+[data-bs-theme="default"] {
+    --bs-body-color: #202020;
+    --bs-body-bg: #f2e8d0;
+    --bs-primary: #2a3e48;
+    --bs-secondary: #e2e8f0;
+    --bs-border-color: rgba(32, 32, 32, 0.1);
+    --bs-tertiary-bg: #f8f8f5;
+    --bs-emphasis-color: #000;
+
+    .card {
+        --bs-card-bg: #fff5e3;
+    }
+    
+    .btn-primary {
+        --bs-btn-bg: #56451d;
+        --bs-btn-color: #fff;
+    }
+
+    .btn {
+        --bs-btn-hover-bg: #3c2c06;
+    }
+
+    .dropdown-menu {
+        --bs-dropdown-bg: #fff5de;
+    }
+
+    .table {
+        --bs-table-bg: #f6e8ce;
+    }
+}
+
+[data-bs-theme="light"] {
+    --bs-body-color: #202020;
+    --bs-body-bg: #f5f5f5;
+    --bs-primary: #2a3e48;
+    --bs-secondary: #e2e8f0;
+    --bs-border-color: rgba(32, 32, 32, 0.1);
+    --bs-tertiary-bg: #f8f8f5;
+    --bs-emphasis-color: #000;
+
+    .card {
+        --bs-card-bg: rgba(255, 255, 255, 0.9);
+    }
+
+    .btn {
+        --bs-btn-hover-bg: #2a3e48;
+    }
+
+    .dropdown-menu {
+        --bs-dropdown-bg: #fafafa;
+    }
+
+    .table {
+        --bs-table-bg: #fafafa;
+    }
+}
+
+[data-bs-theme="nature"] {
+    --bs-body-color: #2d3a2a;
+    --bs-body-bg: #f3f7e9;
+    --bs-primary: #4a6741;
+    --bs-secondary: #a7bc9d;
+    --bs-border-color: rgba(45, 58, 42, 0.1);
+    --bs-tertiary-bg: #e8efe1;
+    --bs-emphasis-color: #000;
+
+    .card {
+        --bs-card-bg: rgba(240, 245, 240, 0.9);
+    }
+
+    .btn-primary {
+        --bs-btn-bg: #4a6741;
+        --bs-btn-color: #fff;
+        --bs-btn-hover-bg: #3d5435;
+        --bs-btn-active-bg: #314429;
+    }
+
+    .btn-success {
+        --bs-btn-bg: #5b8c51;
+    }
+
+    .btn {
+        --bs-btn-hover-bg: #294b22;
+    }
+
+    .dropdown-menu {
+        --bs-dropdown-bg: #eaeaea;
+    }
+
+    .table {
+        --bs-table-bg: #eaeaea;
+    }
+}
+
+[data-bs-theme="galaxy"] {
+    --bs-body-color: #202020;
+    --bs-body-bg: #f5f5f5;
+    --bs-primary: #2a3e48;
+    --bs-secondary: #e2e8f0;
+    --bs-border-color: rgba(32, 32, 32, 0.1);
+    --bs-tertiary-bg: #f8f8f5;
+    --bs-emphasis-color: #000;
+    
+    .card-content {
+        background-color: #fffef6;
+    }
+    
+    #root {
+        position: relative;
+        min-height: 100vh;
+        
+        &::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                #f5f5f5,
+                #fbffe3,
+                #ffe3ed,
+                #f4e3ff,
+            );
+            background-size: 400% 400%;
+            animation: galaxyGradient 20s ease infinite;
+            z-index: -1;
+        }
+    }
+
+    @keyframes galaxyGradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+}
+
+.lato-light {
+    font-family: "Lato", serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.lato-regular {
+    font-family: "Lato", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.lato-bold {
+    font-family: "Lato", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.fade-in-delay-1 {
+    animation: fadeInUp 0.5s ease-out 0.2s forwards;
+    opacity: 0;
+}
+
+.fade-in-delay-2 {
+    animation: fadeInUp 0.5s ease-out 0.4s forwards;
+    opacity: 0;
+}
+
+.fade-in-delay-3 {
+    animation: fadeInUp 0.5s ease-out 0.6s forwards;
+    opacity: 0;
+}
+
+.fade-in-delay-4 {
+    animation: fadeInUp 0.5s ease-out 0.8s forwards;
+    opacity: 0;
+}

@@ -1,0 +1,45 @@
+// Default variable overrides
+$body-bg: #f8f8f5;
+$body-color: #202020;
+
+// Colors
+$primary: #2a3e48;
+$secondary: #EFEFEF;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$black: #202020;
+
+// Component customization
+$card-border-width: 0;
+$card-border-radius: 0.5rem;
+$card-box-shadow: 0 0.125rem 0.25rem rgba($black, 0.075);
+
+// Button customization
+$btn-font-weight: 500;
+$btn-padding-x: 1.5rem;
+$btn-padding-y: 0.7rem;
+$btn-border-radius: 0.375rem;
+
+// Typography
+$font-family-sans-serif: 'Lato', sans-serif, system-ui, monospace;
+$font-size-base: 1.05rem;
+$line-height-base: 1.55;
+
+// Dark mode
+$enable-dark-mode: true;
+
+// Inputs
+$input-bg: #FFFFFF;
+$input-border-width: 1px;
+$table-bg: #fff;
+$dropdown-bg: #fff;
+$form-label-font-size: 16px;
+$form-label-margin-bottom: 0px;
+$enable-negative-margins: true;
+
+$custom-colors: (
+    'default': $body-bg,
+);
+
