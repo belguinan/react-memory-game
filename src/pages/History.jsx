@@ -86,7 +86,7 @@ export default function History() {
     return (
         <div className="container py-4">
             <div className="row justify-content-center">
-                <div className="col-12 col-lg-10">
+                <div className={`col-12 ${sortedHistory.length === 0 ? 'col-lg-6' : 'col-lg-10'}`}>
                     <div className="card border-0 shadow-sm rounded-4 fade-in">
                         <div className="card-body p-4">
                             <div className="d-flex justify-content-between align-items-center mb-4">

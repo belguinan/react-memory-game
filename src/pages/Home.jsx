@@ -1,11 +1,6 @@
-import { useEffect, useState, useMemo } from 'react';
+import {useEffect, useState, useMemo, lazy, Suspense} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { generateCards, formatTime } from '@/helpers/helpers.js';
-import FlipCard from "@/components/FlipCard";
-import Settings from '@/components/Settings';
-import PauseOverlay from '@/components/PauseOverlay';
-import VictoryModal from '@/components/VictoryModal';
-import GameStats from '@/components/GameStats'
 import { useNavigate } from 'react-router-dom';
 import { useGameTimer } from '@/hooks/useGameTimer.js'
 
@@ -15,6 +10,12 @@ import {
     resetGameAction,
     setGameStartedAction
 } from "@/helpers/actions.js"
+
+const FlipCard = lazy(() => import("@/components/FlipCard"))
+const Settings = lazy(() => import("@/components/Settings"))
+const PauseOverlay = lazy(() => import("@/components/PauseOverlay"))
+const VictoryModal = lazy(() => import("@/components/VictoryModal"))
+const GameStats = lazy(() => import("@/components/GameStats"))
 
 export default function Home() {
 
@@ -107,8 +108,8 @@ export default function Home() {
     
                 if (cards.every(card => card.isMatched)) {
                     dispatch(setGameStartedAction(false));
-                    setShowVictoryModal(true);
                     setHasSavedGame(false);
+                    setTimeout(() => setShowVictoryModal(true), 1000);
                 }
             }
         } catch (error) {
